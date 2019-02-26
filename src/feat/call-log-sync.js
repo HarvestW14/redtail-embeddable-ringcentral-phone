@@ -14,12 +14,12 @@ import {getContacts} from './contacts'
 import _ from 'lodash'
 import {
   getXid,
-  getCSRF,
-  formatPhone
+  getCSRF
 } from './common'
 import {
   notify,
-  host
+  host,
+  formatPhone
 } from 'ringcentral-embeddable-extension-common/src/common/helpers'
 
 let {

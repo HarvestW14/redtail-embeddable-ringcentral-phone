@@ -138,7 +138,7 @@ var config = {
       }
     ]
   },
-  devtool: 'source-map',
+  devtool: '#source-map',
   plugins: [
     stylusSettingPlugin,
     new LodashModuleReplacementPlugin({

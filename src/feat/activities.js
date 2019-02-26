@@ -39,6 +39,7 @@ export async function getActivities(body) {
   if (!id) {
     return []
   }
+  console.log('body', body)
   let html = await getContactInfo({
     vid: id
   })
@@ -62,5 +63,6 @@ export async function getActivities(body) {
       url
     })
   })
+  console.log('res', res)
   return res
 }
