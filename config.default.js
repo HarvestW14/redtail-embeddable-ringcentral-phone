@@ -13,8 +13,8 @@ let config = {
 
   //ringcentral config
   ringCentralConfigs: {
-    appKey: '',
-    appServer: ''
+    clientID: 'OxyEdCaWRG2KQsUJy0-u4A',
+    appServer: 'https://platform.ringcentral.com'
   },
 
   //for third party related
