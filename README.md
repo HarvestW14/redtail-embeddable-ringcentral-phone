@@ -14,7 +14,7 @@ Created with [ringcentral-embeddable-extension-factory](https://github.com/ringc
 
 ## Video demo
 
-[https://youtu.be/fAwsIBv5Mcw](https://youtu.be/fAwsIBv5Mcw)
+[https://youtu.be/7BbnwzP1rjk](https://youtu.be/7BbnwzP1rjk)
 
 ## Try it
 
