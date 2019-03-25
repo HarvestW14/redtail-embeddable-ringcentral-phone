@@ -22,10 +22,13 @@ let {
   clientID,
   appServer
 } = sysConfigDefault.ringCentralConfigs
+let {
+  serviceName
+} = sysConfigDefault.thirdPartyConfigs
 
 let appConfigQuery = ''
 if (clientID || appServer) {
-  appConfigQuery = `?appKey=${clientID}&appServer=${encodeURIComponent(appServer)}`
+  appConfigQuery = `?userAgent=${serviceName}_extension&appKey=${clientID}&appServer=${encodeURIComponent(appServer)}`
 }
 
 const {version} = pack
