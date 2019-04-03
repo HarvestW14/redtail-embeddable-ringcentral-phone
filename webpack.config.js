@@ -28,7 +28,7 @@ let {
 
 let appConfigQuery = ''
 if (clientID || appServer) {
-  appConfigQuery = `?userAgent=${serviceName}_extension&appKey=${clientID}&appServer=${encodeURIComponent(appServer)}`
+  appConfigQuery = `?prefix=${serviceName}-rc&newAdapterUI=1&userAgent=${serviceName}_extension%2F${pack.version}&disableActiveCallControl=false&appKey=${clientID}&appServer=${encodeURIComponent(appServer)}`
 }
 
 const {version} = pack
