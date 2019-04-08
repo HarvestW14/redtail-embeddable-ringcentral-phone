@@ -7,11 +7,6 @@
  *
  */
 
-import {
-  RCBTNCLS2,
-  checkPhoneNumber,
-  createElementFromHTML
-} from 'ringcentral-embeddable-extension-common/src/common/helpers'
 import _ from 'lodash'
 import {
   showActivityDetail,

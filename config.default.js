@@ -14,6 +14,7 @@ let config = {
   //ringcentral config
   ringCentralConfigs: {
     clientID: 'OxyEdCaWRG2KQsUJy0-u4A',
+    clientSecret: 'D7ePwREoQoq6gRTvTLqeKQmHEVBfQtTKaTqgsPfdhu-Q',
     appServer: 'https://platform.ringcentral.com'
   },
 
