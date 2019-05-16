@@ -39,16 +39,16 @@ function buildFormData(data) {
     }, '')
 }
 
-async function getContact(body) {
-  let obj = _.find(
+async function getSyncContacts(body) {
+  let objs = _.filter(
     [
       ..._.get(body, 'call.toMatches') || [],
       ..._.get(body, 'call.fromMatches') || []
     ],
     m => m.type === serviceName
   )
-  if (obj) {
-    return obj
+  if (objs.length) {
+    return objs
   }
 
   let nf = _.get(body, 'to.phoneNumber') || _.get(body.call, 'to.phoneNumber')
@@ -56,7 +56,7 @@ async function getContact(body) {
   nf = formatPhone(nf)
   nt = formatPhone(nt)
   let contacts = await getContacts()
-  let res = _.find(
+  let res = _.filter(
     contacts,
     contact => {
       let {
@@ -118,8 +118,26 @@ export async function syncCallLogToRedtail(body) {
   }
 }
 
+
+/**
+ * sync call log action
+ * todo: need you find out how to do the sync
+ * you may check the CRM site to find the right api to do it
+ * @param {*} body
+ * @param {*} formData
+ */
 async function doSync(body, formData) {
-  let {id: contact_id, name: contact_name} = await getContact(body)
+  let contacts = await getSyncContacts(body)
+  if (!contacts.length) {
+    return notify('No related contacts')
+  }
+  for (let contact of contacts) {
+    await doSyncOne(contact, body, formData)
+  }
+}
+
+async function doSyncOne(contact, body, formData) {
+  let {id: contact_id, name: contact_name} = contact
   if (!contact_id) {
     return notify('no related contact', 'warn')
   }
