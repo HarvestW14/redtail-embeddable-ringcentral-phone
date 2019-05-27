@@ -15,7 +15,6 @@ Created with [ringcentral-embeddable-extension-factory](https://github.com/ringc
 - Custom X-USER-AGENT header for api request
 - Active call control
 
-
 ## Video demo
 
 [https://youtu.be/7BbnwzP1rjk](https://youtu.be/7BbnwzP1rjk)

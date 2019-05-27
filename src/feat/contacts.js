@@ -23,7 +23,9 @@ import {
 import $ from 'jquery'
 import fetch from 'ringcentral-embeddable-extension-common/src/common/fetch'
 import {thirdPartyConfigs} from 'ringcentral-embeddable-extension-common/src/common/app-config'
+// import add from './temp-add-conacts'
 
+// add()
 let {
   serviceName
 } = thirdPartyConfigs
@@ -141,6 +143,11 @@ async function getContactDetail(id) {
   let html = await getContactInfo({
     vid: id
   })
+  while (!html) {
+    html = await getContactInfo({
+      vid: id
+    })
+  }
   let re = $(html)
   let trs = re.find('.contact-phones tr, .contact-emails tr')
   let res = {
@@ -202,6 +209,32 @@ async function getContactsDetails(html) {
   return final
 }
 
+
+/**
+ * get contact lists pager
+ */
+async function getContact (page = 1) {
+  let url =`${host}/contacts`
+  if (page) {
+    url = `${url}?page=${page}`
+  }
+  let res = await fetch.get(url, {
+    headers: {
+      Accept: 'text/html'
+    }
+  })
+  if (!res) {
+    console.log('fetch contacts error')
+    notify(
+      'Fetching contacts list error',
+      'warn'
+    )
+    return []
+  }
+  let final = await getContactsDetails(res)
+  return final
+}
+
 /**
  * get contact lists
  */
@@ -223,28 +256,30 @@ export const getContacts = _.debounce(async function (forceUpdate) {
   if (isFetchingContacts) {
     return []
   }
-  let url =`${host}/contacts`
   notify(
     'Fetching contacts list, may take minutes, please stay in this page until it is done.',
     'info',
     1000 * 60 * 60
   )
   isFetchingContacts = true
-  let res = await fetch.get(url, {
-    headers: {
-      Accept: 'text/html'
-    }
-  })
-  if (!res) {
-    isFetchingContacts = false
-    console.log('fetch contacts error')
-    notify(
-      'Fetching contacts list error',
-      'warn'
-    )
-    return []
+  let pages = Array.from(
+    document.querySelectorAll('ul.pagination li a[href]')
+  )
+    .map(d => d.getAttribute('href'))
+    .filter(d => d.includes('page='))
+  pages = _.uniq(pages).map((d, i) => i + 1)
+  if (!pages.length) {
+    pages = [1]
   }
-  let final = await getContactsDetails(res)
+  console.log(pages, 'pages')
+  let final = []
+  for (let i of pages) {
+    let res = await getContact(i)
+    final = [
+      ...final,
+      ...res
+    ]
+  }
   isFetchingContacts = false
   await setCache(window.rc.cacheKey, final, 'never')
   notify(
